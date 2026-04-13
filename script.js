@@ -17,12 +17,15 @@ let j = 0;
 let fullWidth = document.documentElement.clientWidth;
 let fullHeight = document.documentElement.clientHeight;
 let baseDimensions;
+let mouseIsDown;
 
 if (fullWidth <= fullHeight) {
   baseDimensions = fullWidth;
 } else {baseDimensions = fullHeight};
 
-console.log(`${fullWidth, fullHeight, baseDimensions}`);
+//console.log(`${fullWidth, fullHeight, baseDimensions}`);
+grid.onmousedown = () => mouseIsDown = true;
+grid.onmouseup = () => mouseIsDown = false;
 
 function initialiseGrid (num) {
   gridSize.textContent = `${num} x ${num}`;
@@ -39,7 +42,10 @@ function initialiseGrid (num) {
       box.style.height = `${baseDimensions / num}px`;
       box.style.backgroundColor = "white";
       box.style.border = "1px solid black";
-      box.addEventListener("mouseenter", () => box.style.backgroundColor = "black");
+      box.addEventListener("mouseenter", () => {
+      if (mouseIsDown == true) {
+        box.style.backgroundColor = "black";
+      }});
     }
   }
 };
