@@ -19,13 +19,30 @@ let fullHeight = document.documentElement.clientHeight;
 let baseDimensions;
 let mouseIsDown;
 
+//List of some catppuccin colors
+const colorsList = [`rgb(245, 224, 220)`, `rgb(242, 205, 205)`, `rgb(245, 194, 231)`,
+`rgb(203, 166, 247)`, `rgb(243, 139, 168)`, `rgb(235, 160, 172)`, `rgb(250, 179, 135)`,
+`rgb(249, 226, 175)`, `rgb(166, 227, 161)`, `rgb(148, 226, 213)`, `rgb(137, 220, 235)`,
+`rgb(116, 199, 236)`, `rgb(137, 180, 250)`, `rgb(180, 190, 254)`];
+
 if (fullWidth <= fullHeight) {
   baseDimensions = fullWidth;
 } else {baseDimensions = fullHeight};
 
-//console.log(`${fullWidth, fullHeight, baseDimensions}`);
 grid.onmousedown = () => mouseIsDown = true;
 grid.onmouseup = () => mouseIsDown = false;
+
+function getCatppuccin() {
+  const randomColor = colorsList[Math.floor(Math.random() * colorsList.length)];
+  return (randomColor);
+}
+
+function getRgb () {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return (`rgb(${r}, ${g}, ${b})`);
+}
 
 function initialiseGrid (num) {
   gridSize.textContent = `${num} x ${num}`;
@@ -40,12 +57,27 @@ function initialiseGrid (num) {
       row.appendChild(box);
       box.style.width = `${baseDimensions / num}px`;
       box.style.height = `${baseDimensions / num}px`;
-      box.style.backgroundColor = "white";
+      box.style.backgroundColor = `white`;
       box.style.border = "1px solid black";
       box.addEventListener("mouseenter", () => {
       if (mouseIsDown == true) {
-        box.style.backgroundColor = "black";
+        if (box.style.backgroundColor == `white`) {
+          box.style.backgroundColor = getCatppuccin();
+          //box.style.backgroundColor = getRgb();
+          box.style.opacity = "0.1";
+        } else if (box.style.opacity < 1.0) {
+          box.style.opacity = `${parseFloat(box.style.opacity) + 0.1}`;
+        };
       }});
+      box.addEventListener("click", () => {
+        if (box.style.backgroundColor == `white`) {
+          box.style.backgroundColor = getCatppuccin();
+          //box.style.backgroundColor = getRgb();
+          box.style.opacity = "0.1";
+        } else if (box.style.opacity < 1.0) {
+          box.style.opacity = `${parseFloat(box.style.opacity) + 0.1}`;
+        };
+      });
     }
   }
 };
