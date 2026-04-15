@@ -28,6 +28,14 @@ body {
   -webkit-text-stroke: 1px black;
 }
 
+.header-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 18px;
+  align-items: center;
+}
+
 .buttons {
   font-size: 20px;
   border-radius: 9px;

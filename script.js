@@ -8,7 +8,8 @@
   4) After which the user can move the cursor around to fill the individual grids with color
 */
 
-const resizeButton = document.querySelector(".buttons");
+const resizeButton = document.querySelector("#grid-button");
+const clearButton = document.querySelector("#clear-button");
 const gridSize = document.querySelector("#current-size");
 const grid = document.querySelector("#grid-container");
 let size = 16;
@@ -31,7 +32,7 @@ if (fullWidth <= fullHeight) {
 
 grid.onmousedown = () => mouseIsDown = true;
 grid.onmouseup = () => mouseIsDown = false;
-
+//document.body.style.cursor = "pointer";
 function getCatppuccin() {
   const randomColor = colorsList[Math.floor(Math.random() * colorsList.length)];
   return (randomColor);
@@ -84,9 +85,18 @@ function initialiseGrid (num) {
 
 initialiseGrid(size);
 
-resizeButton.addEventListener("click", (size) => {
+resizeButton.addEventListener("click", () => {
   size = Number(prompt(`Type in new grid size -
 (e.g. typing in 20 yields a grid size of 20x20 squares *Up to a limit of 100`));
+  if (size > 100 || size < 1) {
+    alert(`Grid size can only be between 1 and 100`);
+  } else {
+    grid.innerHTML = "";
+    initialiseGrid(size);
+  };
+});
+
+clearButton.addEventListener("click", () => {
   grid.innerHTML = "";
   initialiseGrid(size);
 });
